@@ -60,11 +60,10 @@ public class Beverage {
     // Creating the override
     @Override
     public String toString() {
-        String result = beverageName + " (" + ounces + " oz.)";
-        if (!addIns.isEmpty()){
-            result += " with " + addIns;
-        }
-        result += " $" + String.format("%.2f", price);
-        return result;
+      if (addIns.isEmpty()) {
+          return beverageName + " (" + ounces + " oz.) $" + String.format("%.2f", price);
+      } else {
+          return beverageName + " (" + ounces + " oz.) with " + addIns + " $" + String.format("%.2f", price);
+      }
     }
 }
