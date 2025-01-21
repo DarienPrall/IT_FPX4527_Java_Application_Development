@@ -1,0 +1,11 @@
+Beverage       Size      Price     
+___________________________________
+coffee         8  oz.    $ 1.95 
+coffee         12 oz.    $ 2.25 
+coffee         16 oz.    $ 2.60 
+coffee         20 oz.    $ 2.95 
+tea            8  oz.    $ 1.75 
+tea            12 oz.    $ 2.00 
+tea            16 oz.    $ 2.25 
+tea            20 oz.    $ 2.50 
+water          8  oz.    $ 0.99 

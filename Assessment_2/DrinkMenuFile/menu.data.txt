@@ -1,0 +1,9 @@
+coffee 8 1.95
+coffee 12 2.25
+coffee 16 2.60
+coffee 20 2.95
+tea 8 1.75
+tea 12 2.00
+tea 16 2.25
+tea 20 2.50
+water 8 .99
