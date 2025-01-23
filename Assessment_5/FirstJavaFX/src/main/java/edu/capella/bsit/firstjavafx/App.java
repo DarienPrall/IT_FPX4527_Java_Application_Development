@@ -12,6 +12,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.paint.Color;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -56,20 +58,25 @@ public class App extends Application {
         
         // ADDING THE IMAGE TO THE TOP-RIGHT OF THE GRID
         grid.add(myImageView, 1, 0);
-        
-        
-       // CREATING SHAPES
-       Circle myCircle = new Circle(50, Color.RED);
-       Polygon myPolygon = new Polygon(0, 0, 50, 100, 100, 0);
-       myPolygon.setFill(Color.BLUE);
-       Rectangle myRectangle = new Rectangle(60, 40, Color.GREEN);
+          
+        // CREATING SHAPES
+        Circle myCircle = new Circle(50, Color.RED);
+        Polygon myPolygon = new Polygon(0, 0, 50, 100, 100, 0);
+        myPolygon.setFill(Color.BLUE);
+        Rectangle myRectangle = new Rectangle(60, 40, Color.GREEN);
        
-       // ADDING CREATED SHAPES TO THE BOTTOM-LEFT GRID
-       grid.add(myCircle, 0, 1);
-       grid.add(myPolygon, 0, 1);
-       grid.add(myRectangle, 0, 1);
+        // ADDING CREATED SHAPES TO THE BOTTOM-LEFT GRID
+        grid.add(myCircle, 0, 1);
+        grid.add(myPolygon, 0, 1);
+        grid.add(myRectangle, 0, 1);
        
-        
+        // ADDING DATE
+        Label newDateLabel = new Label();
+        SimpleDateFormat dateLabelFormat = new SimpleDateFormat("MM-dd-yyyy");
+        String currentDate = dateLabelFormat.format(new Date());
+        newDateLabel.setText(currentDate);
+        grid.add(newDateLabel, 1, 1);
+       
         // CREATING AND SHOWING THE APPLICATION PROPERTIES
         Scene scene = new Scene(grid, 640, 480);
         stage.setScene(scene);
