@@ -5,12 +5,12 @@ public class DrinkOrder {
     public static void main(String[] args) {
         // ORDER 1
         Order drinkOrder = new Order();
-        // ORDER 1 BEVERAGES: 3 pre-added, 2 of my own
-        // 3 Pre-added drink orders
+        // ORDER 1 BEVERAGES: 3 PRE-ADDED. 2 OF MY OWN
+        // 3 PRE-ADDED DRINK ORDERS
         drinkOrder.add(new Coffee("dark roast", false, 20, "cream", 3.29));
         drinkOrder.add(new Coffee("light roast", true, 16, 2.99));
         drinkOrder.add(new Tea("black", false, 8, "lemon, sugar", 1.99));
-        // 2 of my own
+        // 2 OF MY OWM
         drinkOrder.add(new Tea("green", false, 16, 1.89));
         drinkOrder.add(new Coffee("light roast", true, 8, "cream, sugar", 1.29));
         // ORDER 1 PAYMENT METHOD WILL BE CASH FOR ORDER 1
