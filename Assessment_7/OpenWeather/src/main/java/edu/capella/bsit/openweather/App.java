@@ -63,6 +63,7 @@ public class App extends Application {
         weatherInfo.setLineSpacing(1.25);
         grid.add(weatherInfo, 0, 1, 2, 1);
         var scene = new Scene(grid, 650, 400);
+        stage.setTitle("Darien Prall's Weather App");
         stage.setScene(scene);
         stage.show();
         
@@ -76,6 +77,8 @@ public class App extends Application {
             if (weatherDataInput != null) {
                 Weather weather = WeatherParser.parseJsonWeatherData(weatherDataInput);
                 weatherInfo.setText(weather.toString());
+                String location = weather.getLocation();
+                stage.setTitle("Darien Prall's Weather App: Weather Conditions for " + location);
             // IF WEATHERINFO IS NULL, THROW AND ERROR
             } else {
                 weatherInfo.setText("Failed to retrieve weather data. ");
