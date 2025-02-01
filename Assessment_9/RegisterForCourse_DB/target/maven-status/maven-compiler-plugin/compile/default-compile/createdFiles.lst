@@ -1,2 +1,4 @@
-edu/capella/bsit/registerforcourse/Course.class
+edu\capella\bsit\registerforcourse\App.class
+edu\capella\bsit\registerforcourse\CourseRegistration.class
 module-info.class
+edu\capella\bsit\registerforcourse\Course.class
