@@ -1,0 +1,4 @@
+--patch-module
+edu.capella.bsit.registration_hibernate=_
+--add-reads
+edu.capella.bsit.registration_hibernate=ALL-UNNAMED
