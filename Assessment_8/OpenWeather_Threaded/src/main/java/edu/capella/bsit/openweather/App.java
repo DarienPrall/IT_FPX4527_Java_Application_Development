@@ -1,5 +1,9 @@
 package edu.capella.bsit.openweather;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.Socket;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,138 +17,134 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+
 import java.util.Scanner;
+import javafx.application.Platform;
 
 public class App extends Application {
+
     private final Label weatherInfo = new Label();
-    // OPENWEAHTERMAP API
+    // Add your OpenWeatherMap API key below
     private final String apiKey = "4583420194fb7df52aabecc1ddcb9be2";
 
     @Override
-    public void start(Stage stage) {        
-        // START CONTAINER
-        GridPane appGrid = new GridPane();
-        appGrid.setPadding(new Insets(20, 20, 20, 20));
-        appGrid.setHgap(20);
-        appGrid.setVgap(20);
-        appGrid.setStyle(
-                "-fx-background-color: #f0f0f0;"
-        );
-        
-        // LATITUDE SECTION
-        Label latitudeLabel = new Label("Latitude: ");
-            latitudeLabel.setFont(Font.font(12));
-            latitudeLabel.setAlignment(Pos.CENTER_RIGHT);
-            latitudeLabel.setStyle(
-                    "-fx-font-weight: bold;"
-            );
-        Label latitudeErrorLabel = new Label();
-            latitudeErrorLabel.setFont(Font.font(8));
-            latitudeErrorLabel.setStyle(
-                    "-fx-text-fill: red;" +
-                    "-fx-font-weight: bold;"
-            );
-        TextField latitudeInput = new TextField();
-            latitudeInput.setFont(Font.font("Courier New", 12));
-            latitudeInput.setAlignment(Pos.CENTER);
-            latitudeInput.setPrefWidth(250);
-            latitudeInput.setStyle(
-                    "-fx-background-color: #ffffff;" +
-                    "-fx-border-color: #ccc;" +
-                    "-fx-border-radius: 5px;" +
-                    "-fx-text-fill: #555555;"
-            );
-        HBox latitudeHBox = new HBox(10, latitudeLabel, latitudeInput);
-            latitudeHBox.setAlignment(Pos.CENTER_RIGHT);
-        
-        // LONGITUDE SECTION
-        Label longitudeLabel = new Label("Longitude: ");
-            longitudeLabel.setFont(Font.font(12));
-            longitudeLabel.setAlignment(Pos.CENTER_RIGHT);
-            longitudeLabel.setStyle(
-                    "-fx-font-weight: bold;"
-            );
-        Label longitudeErrorLabel = new Label();
-        longitudeErrorLabel.setFont(Font.font(8));
-            longitudeErrorLabel.setStyle(
-                    "-fx-text-fill: red;" +
-                    "-fx-font-weight: bold;"
-            );
-        TextField longitudeInput = new TextField();
-            longitudeInput.setFont(Font.font("Courier New", 12));
-            longitudeInput.setAlignment(Pos.CENTER);
-            longitudeInput.setPrefWidth(250);
-            longitudeInput.setStyle(
-                    "-fx-background-color: #ffffff;" +
-                    "-fx-border-color: #ccc;" +
-                    "-fx-border-radius: 5px;" +
-                    "-fx-text-fill: #555555;"
-            );
-        HBox longitudeHBox = new HBox(10, longitudeLabel, longitudeInput);
-            longitudeHBox.setAlignment(Pos.CENTER_RIGHT);
-        
-        // BUTTON SECTION
+    public void start(Stage stage) {
+        // ===========================================
+        // Redo the code below to your own design for 
+        // displaying the weather data.
+        // ===========================================
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(15, 15, 15, 15));
+        Label latPrompt = new Label("Latititude:  ");
+        latPrompt.setFont(Font.font(15));
+        latPrompt.setAlignment(Pos.BOTTOM_RIGHT);
+        TextField latInputField = new TextField();
+        latInputField.setFont(Font.font(15));
+        latInputField.setAlignment(Pos.BASELINE_LEFT);
+        HBox latHBox = new HBox(latPrompt, latInputField);
+        latHBox.setPadding(new Insets(10, 10, 10, 10));
+        Label lonPrompt = new Label("Longitude:  ");
+        lonPrompt.setFont(Font.font(15));
+        lonPrompt.setAlignment(Pos.BOTTOM_RIGHT);
+        TextField lonInputField = new TextField();
+        lonInputField.setFont(Font.font(15));
+        lonInputField.setAlignment(Pos.BASELINE_LEFT);
+        HBox lonHBox = new HBox(lonPrompt, lonInputField);
+        lonHBox.setPadding(new Insets(10, 10, 10, 10));
         Button loadDataButton = new Button("Get Data");
-            loadDataButton.setFont(Font.font(12));
-            loadDataButton.setPrefWidth(150);
-            loadDataButton.setAlignment(Pos.CENTER);
-            loadDataButton.setPadding(new Insets(10, 20, 10, 20));
-            loadDataButton.setStyle(
-                    "-fx-background-color: rgb(51, 121, 246); " +
-                    "-fx-text-fill: white;" +
-                    "-fx-border-radius: 10px;" +
-                    "-fx-border-width: 0px;" +
-                    "-fx-padding: 10px 20px;" +
-                    "-fx-cursor: hand;" +
-                    "-fx-effect: dropshadow(gaussian, #888, 10, 0, 0, 2);"
-            );
-            
-        // GRID DISPLAY
-        appGrid.add(latitudeHBox, 0, 0);
-        appGrid.add(latitudeErrorLabel, 1, 0);
-        appGrid.add(longitudeHBox, 0, 1);
-        appGrid.add(longitudeErrorLabel, 1, 1);
-        appGrid.add(loadDataButton, 0, 2);
-        
-        // SCENE
+        grid.add(latHBox, 0, 0);
+        grid.add(lonHBox, 1, 0);
+        grid.add(loadDataButton, 2, 0);
+
         weatherInfo.setPadding(new Insets(20, 20, 20, 20));
         weatherInfo.setFont(Font.font("Monospaced", FontWeight.BOLD, FontPosture.REGULAR, 18));
         weatherInfo.setLineSpacing(1.25);
-        appGrid.add(weatherInfo, 0, 1, 2, 1);
-        var scene = new Scene(appGrid, 650, 400);
+        grid.add(weatherInfo, 0, 1, 2, 1);
+        var scene = new Scene(grid, 650, 400);
         stage.setScene(scene);
-        stage.setTitle("Darien's Weather App");
         stage.show();
-        
-        loadDataButton.setOnAction( e -> {
-            // Complete the lambda expression with code that uses the Thread class
-            // to call the connectToOpenWeatherServer() method on a new thread. 
-            // Then use Platform.runLater() to update the JavaFX user interface.
-            // Be sure to include appropriate exception handling. 
-            
-            latitudeErrorLabel.setText("");
-            longitudeErrorLabel.setText("");
-            
-            String latitudeText = latitudeInput.getText();
-            String longitudeText = longitudeInput.getText();
-            
-            if (latitudeText.isEmpty()) {
-                latitudeErrorLabel.setText("Latitude cannot be empty");
+
+        loadDataButton.setOnAction(e -> {
+            // Get latitude and longitude values from the input fields
+            String latStr = latInputField.getText();
+            String lonStr = lonInputField.getText();
+
+            // Validate input
+            if (latStr.isEmpty() || lonStr.isEmpty()) {
+                weatherInfo.setText("Please enter both latitude and longitude.");
+                return;
             }
-            
-            if (longitudeText.isEmpty()) {
-                longitudeErrorLabel.setText("Longitude cannot be empty");
+
+            try {
+                // Parse the latitude and longitude into doubles
+                double lat = Double.parseDouble(latStr);
+                double lon = Double.parseDouble(lonStr);
+
+                // Create a new thread to fetch data from OpenWeatherMap server
+                new Thread(() -> {
+                    try {
+                        // Call connectToOpenWeatherServer() method asynchronously
+                        Scanner scanner = connectToOpenWeatherServer(lat, lon, apiKey);
+
+                        // Parse the weather data into a Weather object
+                        Weather weather = WeatherParser.parseJsonWeatherData(scanner);
+
+                        // Update the UI using Platform.runLater()
+                        Platform.runLater(() -> {
+                            if (weather != null) {
+                                weatherInfo.setText(weather.toString()); // Display the weather data
+                            } else {
+                                weatherInfo.setText("Failed to retrieve weather data.");
+                            }
+                        });
+
+                    } catch (Exception ex) {
+                        // Handle any exceptions during data fetching or parsing
+                        Platform.runLater(() -> {
+                            weatherInfo.setText("Error fetching weather data: " + ex.getMessage());
+                        });
+                    }
+                }).start(); // Start the thread
+            } catch (NumberFormatException ex) {
+                weatherInfo.setText("Invalid input. Please enter valid latitude and longitude.");
             }
-            
-            
         });
+
     }
-    
+
     public Scanner connectToOpenWeatherServer(double lat, double lon, String apiKey) {
         Scanner scanner = null;
+        try {
+            // OpenWeatherMap API endpoint for weather data
+            String host = "api.openweathermap.org";
+            int port = 80; // Standard HTTP port
+            String path = "/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
 
-        // Complete code to connect to server using Socket or HttpURLConnection.
-        // Be sure to include appropriate exception handling.
+            // Create a socket connection to the OpenWeatherMap server
+            Socket socket = new Socket(host, port);
+
+            // Set up input and output streams
+            OutputStream outputStream = socket.getOutputStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(socket.getInputStream());
+
+            // Send an HTTP GET request
+            String request = "GET " + path + " HTTP/1.1\r\n"
+                    + "Host: " + host + "\r\n"
+                    + "Connection: close\r\n"
+                    + "\r\n";
+            outputStream.write(request.getBytes());
+            outputStream.flush();
+
+            // Create a scanner to read the response from the server
+            scanner = new Scanner(inputStreamReader);
+
+            // Wait for the response and close the socket after receiving the data
+            socket.close();
+        } catch (IOException e) {
+            // Handle any IOException (e.g., network issues)
+            e.printStackTrace();
+            weatherInfo.setText("Error connecting to server. Please try again later.");
+        }
 
         return scanner;
     }
