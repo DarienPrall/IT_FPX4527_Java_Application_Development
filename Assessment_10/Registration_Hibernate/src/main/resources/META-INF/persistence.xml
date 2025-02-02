@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-    <!-- persistence-unit name must match name of service class -->
     <persistence-unit name="RegistrationService" transaction-type="RESOURCE_LOCAL">
-    <provider> org.hibernate.jpa.HibernatePersistenceProvider</provider>
-    <!-- name of class (incl. package) used for persistence -->
-    <class>Course</class>
-    <class>CourseRegistration</class>
-    <properties>
-      <!-- **************** Database login information  **************** -->  
-      <property name="javax.persistence.jdbc.url" value="dbc:mariadb://localhost:3306/registration"/>
-      <property name="javax.persistence.jdbc.user" value="registrar"/>
-      <property name="javax.persistence.jdbc.password" value="P@ssword"/>
-      <!-- ************* End of database login information  ************* -->
-      <property name="javax.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>
-      <property name="hibernate.show_sql" value="false"/>
-      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
-      <property name="hibernate.format_sql" value="true"/>
-      <property name="hibernate.use_sql_comments" value="true"/>
-      <property name="javax.persistence.schema-generation.database.action" value="none"/>
-    </properties>
-  </persistence-unit>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>edu.capella.bsit.registration_hibernate.Course</class>
+        <class>edu.capella.bsit.registration_hibernate.CourseRegistration</class>
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mariadb://localhost:3306/registration"/>
+            <property name="javax.persistence.jdbc.user" value="registrar"/>
+            <property name="javax.persistence.jdbc.password" value="P@ssword"/>
+            <property name="javax.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
+            <property name="javax.persistence.schema-generation.database.action" value="none"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MariaDBDialect" />
+        </properties>
+    </persistence-unit>
 </persistence>
-

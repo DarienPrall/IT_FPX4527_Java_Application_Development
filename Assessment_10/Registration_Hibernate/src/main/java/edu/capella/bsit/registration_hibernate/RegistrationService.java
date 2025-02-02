@@ -48,6 +48,27 @@ public class RegistrationService {
         return query.getResultList();
     }
     
+        public String validateRegistration(Course c, String learnerID) {
+        String message = "";
+        int registeredCredits = 0;
+
+        List<CourseRegistration> registeredCourses = getCourseRegistrationsForID(learnerID);
+
+        for (CourseRegistration crsReg : registeredCourses) {
+            if (crsReg.getCourseCode().equals(c.getCourseCode())) {
+                message = "Already registered for " + c.getCourseCode();
+                break;
+            }
+            registeredCredits += crsReg.getCreditHours();
+        }
+
+        if (message.isEmpty() && registeredCredits + c.getCreditHours() > 9) {
+            message = c.getCourseCode() + " exceeds the 9 credit hour limit.";
+        }
+
+        return message;
+    }
+    
     public long getCreditsForID(String id) {
         String hql = "select sum(crs.creditHours) from CourseRegistration crs "
                 + "where learnerID = :id";
